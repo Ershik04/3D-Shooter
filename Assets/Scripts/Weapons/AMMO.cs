@@ -6,6 +6,8 @@ public class AMMO : MonoBehaviour
 {
     [SerializeField]
     private int _ammoCount;
+    [SerializeField]
+    private int _ammoIncrace;
 
     public int GetCurentAMMO()
     {
@@ -15,5 +17,10 @@ public class AMMO : MonoBehaviour
     public void ReduceCurrentAMMO()
     {
         _ammoCount--;
+    }
+
+    public void IncraceCurrentAMMO()
+    {
+        _ammoCount += _ammoIncrace;
     }
 }

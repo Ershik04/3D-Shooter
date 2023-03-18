@@ -10,15 +10,17 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Player _target;
     [SerializeField]
-    private float _attacDistance;
+    private float _attackDistance;
     [SerializeField]
     private float _distanceToTarget;
     [SerializeField]
     private float _damage;
     public bool _isProvoked = false;
+    public bool _canAttack;
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _canAttack = true;
     }
 
     private void Update()
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
         {
             EngageTarget();
         }
-        else if(_distanceToTarget <= _attacDistance)
+        else if(_distanceToTarget <= _attackDistance)
         {
             _isProvoked = true;
         }
@@ -37,7 +39,7 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, _attacDistance);
+        Gizmos.DrawWireSphere(transform.position, _attackDistance);
     }
 
     private void EngageTarget()
@@ -46,7 +48,7 @@ public class Enemy : MonoBehaviour
         {
             ChaseTarget();
         }
-        else if (_distanceToTarget <= _agent.stoppingDistance)
+        else if (_distanceToTarget <= _agent.stoppingDistance && _canAttack == true)
         {
             AttackTarget();
         }
@@ -55,11 +57,14 @@ public class Enemy : MonoBehaviour
     private void ChaseTarget()
     {
         _agent.SetDestination(_target.transform.position);
+        GetComponent<Animator>().SetBool("Attack", false);
+        GetComponent<Animator>().SetTrigger("MoveTrigger");
     }
 
     public void AttackTarget()
     {
         _target.Damage(_damage);
+        GetComponent<Animator>().SetBool("Attack", true);
         Debug.Log("Атака");
     }
 }
