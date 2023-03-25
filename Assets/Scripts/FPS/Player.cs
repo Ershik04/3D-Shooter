@@ -5,9 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float _playerHealt;
+    private float _playerHealth;
     [SerializeField]
     private GameOverUI _ui;
+    [SerializeField]
+    private float _maxHealth = 100;
     void Start()
     {
         
@@ -20,12 +22,21 @@ public class Player : MonoBehaviour
 
     public void Damage(float damage)
     {
-        _playerHealt -= damage;
-        if(_playerHealt <= 0)
+        _playerHealth -= damage;
+        if(_playerHealth <= 0)
         {
             Debug.Log("Игра окончена");
             _ui.StopGame();
-            _playerHealt = 100;
+            _playerHealth = 100;
+        }
+    }
+
+    public void Heal(float health)
+    {
+        _playerHealth += health;
+        if (_playerHealth > _maxHealth)
+        {
+            _playerHealth = _maxHealth;
         }
     }
 }
