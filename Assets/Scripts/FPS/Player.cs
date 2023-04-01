@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _playerHealth;
+    public float PlayerHealth => _playerHealth;
     [SerializeField]
     private GameOverUI _ui;
     [SerializeField]

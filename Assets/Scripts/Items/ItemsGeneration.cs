@@ -16,6 +16,8 @@ public class ItemsGeneration : MonoBehaviour
     private int _minItemsNumber;
     [SerializeField]
     private int _maxItemsNumber;
+    [SerializeField]
+    private float _offset;
 
     private void Start()
     {
@@ -29,7 +31,7 @@ public class ItemsGeneration : MonoBehaviour
         {
             float _xPosition = Random.Range(_minPosition, _maxPosition);
             float _zPosition = Random.Range(_minPosition, _maxPosition);
-            Vector3 generationPosition = new Vector3(_xPosition, _spawnpoint.position.y, _zPosition);
+            Vector3 generationPosition = new Vector3(_xPosition, _spawnpoint.position.y + _offset, _zPosition);
             Instantiate(_template, generationPosition, _spawnpoint.rotation, _spawnpoint);
         }
     }
