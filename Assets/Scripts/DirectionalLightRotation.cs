@@ -8,6 +8,9 @@ public class DirectionalLightRotation : MonoBehaviour
     private float _secondsInDay;
     [SerializeField]
     private float _dayTime;
+    [SerializeField]
+    private int _days;
+    public int Days => _days;
 
     private void Start()
     {
@@ -21,6 +24,7 @@ public class DirectionalLightRotation : MonoBehaviour
         if (_dayTime >= 1)
         {
             _dayTime = 0;
+            _days += 1;
         }
     }
 }
