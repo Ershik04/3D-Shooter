@@ -9,16 +9,6 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     private float _damage;
 
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
-
     public void AttackHitEvent()
     {
         if(_player == null)

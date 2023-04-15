@@ -60,6 +60,11 @@ public class Weapon : MonoBehaviour
             {
                 objectHit.TakeDamage(_damage);
             }
+            var objectHit2 = hit.transform.GetComponent<BossHealth>();
+            if (objectHit2 != null)
+            {
+                objectHit2.BossTakeDamage(_damage);
+            }
         }
     }
 

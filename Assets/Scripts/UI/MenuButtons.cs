@@ -30,6 +30,7 @@ public class MenuButtons : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(_scene);
+        Time.timeScale = 1;
     }
 
     public void CloseGame()
