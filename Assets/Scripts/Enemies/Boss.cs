@@ -32,14 +32,14 @@ public class Boss : MonoBehaviour
     {
         _timer -= Time.deltaTime;
         _distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-        if (_isProvoked == true)
+        /*if (_isProvoked == true)
         {
             EngageTarget();
         }
         else if (_distanceToTarget <= _attackDistance)
         {
             _isProvoked = true;
-        }
+        }*/
         if (_timer <= 0)
         {
             _canAttack = true;
@@ -48,6 +48,8 @@ public class Boss : MonoBehaviour
         {
             _canAttack = false;
         }
+        _agent.transform.LookAt(_target.transform.position);
+        AttackTarget();
     }
 
     private void OnDrawGizmos()
@@ -56,7 +58,7 @@ public class Boss : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _attackDistance);
     }
 
-    private void EngageTarget()
+    /*private void EngageTarget()
     {
         if (_distanceToTarget >= _agent.stoppingDistance)
         {
@@ -66,23 +68,38 @@ public class Boss : MonoBehaviour
         {
             AttackTarget();
         }
-    }
+    }*/
 
-    private void ChaseTarget()
+    /*private void ChaseTarget()
     {
         _agent.SetDestination(_target.transform.position);
         GetComponent<Animator>().SetBool("Attack", false);
         GetComponent<Animator>().SetTrigger("MoveTrigger");
-    }
+    }*/
 
     public void AttackTarget()
     {
-        if (_distanceToTarget >= _attackDistance)
+        if (_canAttack)
         {
-            _target.Damage(_damage);
+            var ray = new Ray(transform.position, transform.forward);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                print(hit.transform.name);
+                var objectHit = hit.transform;
+                if (objectHit != null)
+                {
+                    if (objectHit.tag == "Wall")
+                    {
+                        Destroy(hit.transform.gameObject);
+                    }
+                    else if (objectHit.tag == "Player")
+                    {
+                        objectHit.GetComponent<Player>().Damage(_damage);
+                    }
+                }
+            }
             GetComponent<Animator>().SetBool("Attack", true);
             _timer = _maxTimer;
         }
     }
 }
-

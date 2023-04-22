@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _canAttack = true;
     }
 
